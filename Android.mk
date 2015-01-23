@@ -1,6 +1,9 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
+# work-around dashclock missing hdpi resources bug
+LOCAL_AAPT_INCLUDE_ALL_RESOURCES := true
+
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
