@@ -391,23 +391,22 @@ class YahooWeatherApiClient {
         // http://developer.yahoo.com/weather/
         String query = "https://query.yahooapis.com/v1/public/yql?q="
                 + "SELECT * FROM weather.forecast WHERE woeid=" + woeid
-                + " and u=\'" + sWeatherUnits + "\'";
+                + " AND u=\'" + sWeatherUnits + "\'";
         return query.replaceAll(" ", "%20");
     }
 
     private static String buildPlaceSearchUrl(Location l) {
-        // GeoPlanet API
-        return "http://where.yahooapis.com/v1/places.q('"
-                + l.getLatitude() + "," + l.getLongitude() + "')"
-                + "?appid=" + YahooWeatherApiConfig.APP_ID;
+        String query = "https://query.yahooapis.com/v1/public/yql?q="
+                + "SELECT * FROM geo.places(1) WHERE text=\'("
+                + l.getLatitude() + "," + l.getLongitude() + ")\'";
+        return query.replaceAll(" ", "%20");
     }
 
     private static String buildPlaceSearchStartsWithUrl(String startsWith) {
-        // GeoPlanet API
-        startsWith = startsWith.replaceAll("[^\\w ]+", "").replaceAll(" ", "%20");
-        return "http://where.yahooapis.com/v1/places.q('" + startsWith + "%2A');"
-                + "count=" + MAX_SEARCH_RESULTS
-                + "?appid=" + YahooWeatherApiConfig.APP_ID;
+        String query = "https://query.yahooapis.com/v1/public/yql?q="
+                + "SELECT * FROM geo.places(" + MAX_SEARCH_RESULTS
+                + ") WHERE text=\'(" + startsWith + ")\'";
+        return query.replaceAll(" ", "%20");
     }
 
     public static class LocationInfo {
